@@ -1,6 +1,7 @@
 // src/components/Settings.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Dashboard from '../Maincontent/Dashboard';
 
 const Settings = ({ }) => {
   const navigate = useNavigate()
@@ -9,6 +10,7 @@ const Settings = ({ }) => {
     navigate("/");
   };
   return (
+    <Dashboard>
     <div className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 mt-10">
       <h2 className="text-xl font-bold mb-4">Settings</h2>
       <button
@@ -18,6 +20,7 @@ const Settings = ({ }) => {
         Logout
       </button>
     </div>
+    </Dashboard>
   );
 };
 

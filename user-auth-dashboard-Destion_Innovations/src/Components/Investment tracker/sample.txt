@@ -1,0 +1,98 @@
+const MyInvestments = () => {
+  // Sample Data (In real implementation, fetch from backend)
+  const investments = {
+    stocks: [
+      { name: 'ABC Corp', invested: 50000, current: 60000, growth: 20 },
+      { name: 'XYZ Ltd', invested: 30000, current: 25000, growth: -16.67 },
+    ],
+    sips: [
+      { name: 'Mutual Fund 1', invested: 100000, current: 130000, growth: 30 },
+      { name: 'Mutual Fund 2', invested: 50000, current: 62000, growth: 24 },
+    ],
+    gold: [
+      { name: 'Gold ETF', invested: 80000, current: 90000, growth: 12.5 },
+    ],
+    silver: [
+      { name: 'Silver ETF', invested: 40000, current: 42000, growth: 5 },
+    ],
+  };
+
+  // Data for Pie Chart
+  const pieData = {
+    labels: ['Stocks', 'SIPs', 'Gold', 'Silver'],
+    datasets: [
+      {
+        data: [
+          investments.stocks.reduce((sum, i) => sum + i.current, 0),
+          investments.sips.reduce((sum, i) => sum + i.current, 0),
+          investments.gold.reduce((sum, i) => sum + i.current, 0),
+          investments.silver.reduce((sum, i) => sum + i.current, 0),
+        ],
+        backgroundColor: ['#3b82f6', '#10b981', '#fbbf24', '#a855f7'],
+      },
+    ],
+  };
+
+  return (
+    <div className="bg-white p-6 rounded shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">My Investments</h2>
+      
+      {/* Cumulative Analysis */}
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="p-4 bg-blue-100 rounded">
+          <p className="text-gray-700">Total Invested</p>
+          <p className="text-xl font-bold">₹{/* total invested calculation here */}</p>
+        </div>
+        <div className="p-4 bg-green-100 rounded">
+          <p className="text-gray-700">Current Valuation</p>
+          <p className="text-xl font-bold">₹{/* current valuation calculation here */}</p>
+        </div>
+        <div className="p-4 bg-yellow-100 rounded">
+          <p className="text-gray-700">Overall Growth</p>
+          <p className="text-xl font-bold">{/* overall growth rate here */}%</p>
+        </div>
+      </div>
+
+      {/* Pie Chart */}
+      <div className="mt-6">
+        <h3 className="text-lg font-medium mb-4">Investment Allocation</h3>
+        <div className="w-full h-64">
+          <Pie data={pieData} options={{ responsive: true, maintainAspectRatio: false }} />
+        </div>
+      </div>
+
+      {/* Investment Sections */}
+      {Object.keys(investments).map((category) => (
+        <div key={category} className="mt-8">
+          <h3 className="text-xl font-semibold">{category.toUpperCase()}</h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4">Investment Name</th>
+                  <th className="py-2 px-4">Invested Amount</th>
+                  <th className="py-2 px-4">Current Valuation</th>
+                  <th className="py-2 px-4">Growth Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {investments[category].map((item) => (
+                  <tr key={item.name}>
+                    <td className="border px-4 py-2">{item.name}</td>
+                    <td className="border px-4 py-2">₹{item.invested}</td>
+                    <td className="border px-4 py-2">₹{item.current}</td>
+                    <td className={`border px-4 py-2 ${item.growth >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {item.growth}%
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default MyInvestments;

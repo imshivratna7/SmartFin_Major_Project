@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../axios';
-import { useUser } from '../UserContext';
+import axios from '../../axios';
+import { useUser } from '../../UserContext';
 
-const OverviewCards = () => {
+const OverviewCards = ({month,year}) => {
   const [summary, setSummary] = useState({
     totalIncome: 0,
     totalExpenses: 0,
@@ -14,16 +14,18 @@ const OverviewCards = () => {
     const fetchSummary = async () => {
       try {
         if (user) {
-          const response = await axios.get(`/transactions/summary/${user.username}`);
+          const response = await axios.get(`/transactions/summary/${user.username}`,{ params: { month, year } });
+          
           setSummary(response.data);
         }
       } catch (error) {
         console.error('Error fetching summary:', error);
       }
     };
+    
 
     fetchSummary();
-  }, [user]);
+  }, [user,month,year]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

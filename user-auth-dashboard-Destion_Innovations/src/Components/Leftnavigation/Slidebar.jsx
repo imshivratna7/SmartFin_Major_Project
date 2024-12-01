@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
+    <Dashboard>
     <div className="w-64 h-full bg-white shadow-md p-4 fixed">
       <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
       <nav>
@@ -22,9 +23,15 @@ const Sidebar = () => {
               Settings
             </Link>
           </li>
+          <li>
+            <Link to="/investment-tracker" className="text-gray-700 hover:text-blue-500">
+              Investment tracker
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>
+    </Dashboard>
   );
 };
 

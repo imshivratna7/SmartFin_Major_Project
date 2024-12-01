@@ -4,8 +4,11 @@ import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/Signuppage';
 import DashboardPage from './Pages/Dashboardpages';
 import './index.css';
-import Settings from './Components/Settings';
-import Profile from './Components/Profile';
+import Settings from './Components/Leftnavigation/Settings';
+import Profile from './Components/Leftnavigation/Profile';
+import SIPCalculator from './Components/Investment/sip-calculator';
+import MyInvestments from './Components/Investment tracker/Investment_tracker';
+
 
 const App = () => {
   return (
@@ -17,6 +20,8 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/settings" element={<Settings/>} />
+        <Route path="/sip-calculator" element={<SIPCalculator />} />
+        <Route path="/investment-tracker" element={<MyInvestments/>} />
       </Routes>
     </Router>
   );

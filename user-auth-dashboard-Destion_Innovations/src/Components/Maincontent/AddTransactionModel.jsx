@@ -114,38 +114,137 @@
 
 // export default AddTransactionModal;
 
+// import React, { useState } from 'react';
+// import { useUser } from '../../UserContext';
+// import axios from '../../axios';
+// const AddTransaction = () => {
+//   const [transactionType, setTransactionType] = useState('income');
+//   const [transactionAmount, setTransactionAmount] = useState('');
+//   const [transactionCategory, setTransactionCategory] = useState('');
+//   const [transactionDescription, setTransactionDescription] = useState('');
+//   const { user } = useUser();
+//   const handleAddTransaction = async () => {
+//     // console.log(user);
+    
+//     try {
+//       const response = await axios.post('/transactions/add', {
+//           userId: user.username,  // Replace with the current user's ID
+//           type: transactionType,
+//           amount: transactionAmount,
+//           category: transactionCategory,
+//           description: transactionDescription,
+//         })
+  
+//       const data = await response.data;
+      
+//         console.log(data);
+//         alert('Transaction added successfully');
+//         // refreshTransactions(); // Refresh the list of transactions after adding a new one
+//         // Clear the input fields
+//         setTransactionAmount('');
+//         setTransactionCategory('');
+//         setTransactionDescription('');
+//       } 
+//      catch (error) {
+//       console.error('Error adding transaction:', error);
+//       alert(error.response?.data?.message || 'Failed to add transaction');
+//     }
+//   };
+
+//   return (
+//     <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg">
+//       <h2 className="text-xl font-bold mb-4">Add Transaction</h2>
+//       <div className="mb-3">
+//         <label className="block mb-1">Type</label>
+//         <select
+//           value={transactionType}
+//           onChange={(e) => setTransactionType(e.target.value)}
+//           className="w-full border p-2 rounded-md"
+//         >
+//           <option value="income">Income</option>
+//           <option value="expense">Expense</option>
+//         </select>
+//       </div>
+//       <div className="mb-3">
+//         <label className="block mb-1">Amount</label>
+//         <input
+//           type="number"
+//           value={transactionAmount}
+//           onChange={(e) => setTransactionAmount(e.target.value)}
+//           className="w-full border p-2 rounded-md"
+//           placeholder="Enter amount"
+//         />
+//       </div>
+//       <div className="mb-3">
+//         <label className="block mb-1">Category</label>
+//         <input
+//           type="text"
+//           value={transactionCategory}
+//           onChange={(e) => setTransactionCategory(e.target.value)}
+//           className="w-full border p-2 rounded-md"
+//           placeholder="Enter category"
+//         />
+//       </div>
+//       <div className="mb-3">
+//         <label className="block mb-1">Description</label>
+//         <input
+//           type="text"
+//           value={transactionDescription}
+//           onChange={(e) => setTransactionDescription(e.target.value)}
+//           className="w-full border p-2 rounded-md"
+//           placeholder="Enter description"
+//         />
+//       </div>
+//       <button
+//         onClick={handleAddTransaction}
+//         className="w-full bg-blue-500 text-white p-2 rounded-md"
+//       >
+//         Add Transaction
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default AddTransaction;
+
 import React, { useState } from 'react';
-import { useUser } from '../UserContext';
-import axios from '../axios';
+import { useUser } from '../../UserContext';
+import axios from '../../axios';
+
 const AddTransaction = () => {
   const [transactionType, setTransactionType] = useState('income');
   const [transactionAmount, setTransactionAmount] = useState('');
   const [transactionCategory, setTransactionCategory] = useState('');
   const [transactionDescription, setTransactionDescription] = useState('');
+  const [transactionDate, setTransactionDate] = useState(new Date().toISOString().split('T')[0]); // Default to today
   const { user } = useUser();
+
   const handleAddTransaction = async () => {
-    // console.log(user);
-    
     try {
+      // Derive month and year from the transaction date
+      const date = new Date(transactionDate);
+      const month = date.getMonth() + 1; // Months are 0-based
+      const year = date.getFullYear();
+
       const response = await axios.post('/transactions/add', {
-          userId: user.username,  // Replace with the current user's ID
-          type: transactionType,
-          amount: transactionAmount,
-          category: transactionCategory,
-          description: transactionDescription,
-        })
-  
-      const data = await response.data;
-      
-        console.log(data);
-        alert('Transaction added successfully');
-        // refreshTransactions(); // Refresh the list of transactions after adding a new one
-        // Clear the input fields
-        setTransactionAmount('');
-        setTransactionCategory('');
-        setTransactionDescription('');
-      } 
-     catch (error) {
+        userId: user.username,
+        type: transactionType,
+        amount: transactionAmount,
+        category: transactionCategory,
+        description: transactionDescription,
+        date: transactionDate, // Full date
+        month, // Month as a number (1-12)
+        year,  // Year (e.g., 2024)
+      });
+
+      console.log(response.data);
+      alert('Transaction added successfully');
+      // Clear the input fields
+      setTransactionAmount('');
+      setTransactionCategory('');
+      setTransactionDescription('');
+      setTransactionDate(new Date().toISOString().split('T')[0]);
+    } catch (error) {
       console.error('Error adding transaction:', error);
       alert(error.response?.data?.message || 'Failed to add transaction');
     }
@@ -154,6 +253,8 @@ const AddTransaction = () => {
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-xl font-bold mb-4">Add Transaction</h2>
+
+      {/* Type Selector */}
       <div className="mb-3">
         <label className="block mb-1">Type</label>
         <select
@@ -165,6 +266,8 @@ const AddTransaction = () => {
           <option value="expense">Expense</option>
         </select>
       </div>
+
+      {/* Amount Input */}
       <div className="mb-3">
         <label className="block mb-1">Amount</label>
         <input
@@ -175,6 +278,8 @@ const AddTransaction = () => {
           placeholder="Enter amount"
         />
       </div>
+
+      {/* Category Input */}
       <div className="mb-3">
         <label className="block mb-1">Category</label>
         <input
@@ -185,6 +290,8 @@ const AddTransaction = () => {
           placeholder="Enter category"
         />
       </div>
+
+      {/* Description Input */}
       <div className="mb-3">
         <label className="block mb-1">Description</label>
         <input
@@ -195,6 +302,19 @@ const AddTransaction = () => {
           placeholder="Enter description"
         />
       </div>
+
+      {/* Date Picker */}
+      <div className="mb-3">
+        <label className="block mb-1">Date</label>
+        <input
+          type="date"
+          value={transactionDate}
+          onChange={(e) => setTransactionDate(e.target.value)}
+          className="w-full border p-2 rounded-md"
+        />
+      </div>
+
+      {/* Submit Button */}
       <button
         onClick={handleAddTransaction}
         className="w-full bg-blue-500 text-white p-2 rounded-md"
@@ -206,4 +326,3 @@ const AddTransaction = () => {
 };
 
 export default AddTransaction;
-
