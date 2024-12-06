@@ -13,7 +13,7 @@ const Dashboard = ({ children }) => {
     navigate("/");
   };
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex ">
       {/* Sidebar */}
       <aside className="bg-gray-800 text-white w-64 space-y-6 py-7 px-2">
         <h2 className="text-2xl font-bold text-center">SmartFin</h2>
@@ -21,17 +21,21 @@ const Dashboard = ({ children }) => {
           <Link to="/dashboard" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
             Dashboard
           </Link>
-          <Link to="/profile" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-            Profile
-          </Link>
-          <Link to="/settings" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-            Settings
-          </Link>
+
           <Link to="/sip-calculator" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
            SIP Calculator
           </Link>
+
           <Link to="/investment-tracker" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
            Investment Tracker
+          </Link>
+
+          <Link to="/profile" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+            Profile
+          </Link>
+          
+          <Link to="/settings" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+            Settings
           </Link>
         </nav>
       </aside>
@@ -39,7 +43,7 @@ const Dashboard = ({ children }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="bg-white shadow p-4">
+        <header className="bg-white shadow p-4 border border-black border-solid m-[1px]">
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-semibold">Dashboard</h1>
             <div className="flex items-center space-x-4">
@@ -52,7 +56,8 @@ const Dashboard = ({ children }) => {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 p-6 bg-gray-100">
+        {/* <main className="flex-1 p-6 bg-gray-100"> */}
+        <main className="flex-1 p-6 bg-white">
           {children}
         </main>
       </div>

@@ -67,12 +67,12 @@ import { useUser } from "../../UserContext";
 const ExpenseEarningPieChart = ({month,year}) => {
   const [data, setData] = useState([]);
   const { user } = useUser();
-  console.log(user?.username);
+  // console.log(user?.username);
   useEffect(() => {
       const fetchData = async () => {
           try {
               const response = await axios.get(`/transactions/user/${user?.username}`,{ params: { month, year } }); // Replace with your endpoint `/transactions/user/${user.username}`
-              console.log(response.data);
+              // console.log(response.data);
               const transactions = response.data;
             //   console.log(transactions);
               
@@ -87,8 +87,8 @@ const ExpenseEarningPieChart = ({month,year}) => {
           }
         });
 
-        console.log(totalEarnings);
-        console.log(totalExpenses);
+        // console.log(totalEarnings);
+        // console.log(totalExpenses);
         
 
         setData([
@@ -106,7 +106,7 @@ const ExpenseEarningPieChart = ({month,year}) => {
   const COLORS = ["#4CAF50", "#F44336"]; // Green for earnings, red for expenses
 
   return (
-    <div className="p-6 bg-white shadow rounded-lg">
+    <div className="p-6 bg-white shadow rounded-lg border-2 border-black border-solid ">
       <h2 className="text-xl font-semibold text-gray-700 mb-4">
         Expense vs Earnings
       </h2>

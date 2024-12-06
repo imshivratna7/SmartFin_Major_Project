@@ -29,15 +29,15 @@ const OverviewCards = ({month,year}) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="bg-white p-6 rounded-lg shadow">
+      <div className="bg-white p-6 rounded-lg shadow border border-black border-solid">
         <h3 className="text-xl font-semibold">Total Income</h3>
         <p className="text-3xl text-green-500">${summary.totalIncome.toFixed(2)}</p>
       </div>
-      <div className="bg-white p-6 rounded-lg shadow">
+      <div className="bg-white p-6 rounded-lg shadow border border-black border-solid">
         <h3 className="text-xl font-semibold">Total Expenses</h3>
         <p className="text-3xl text-red-500">${summary.totalExpenses.toFixed(2)}</p>
       </div>
-      <div className="bg-white p-6 rounded-lg shadow">
+      <div className="bg-white p-6 rounded-lg shadow border border-black border-solid">
         <h3 className="text-xl font-semibold">Balance</h3>
         <p className={`text-3xl ${summary.balance >= 0 ? 'text-green-500' : 'text-red-500'}`}>
           ${summary.balance.toFixed(2)}

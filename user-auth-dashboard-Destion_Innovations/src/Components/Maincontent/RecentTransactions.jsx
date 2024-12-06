@@ -183,7 +183,7 @@ const RecentTransactions = ({ month, year }) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="bg-white p-6 rounded-lg shadow">
+      <div className="bg-white p-6 rounded-lg shadow border border-black border-solid">
         <h2 className="text-xl font-semibold mb-4">Recent Incomes</h2>
         {incomeTransactions?.length > 0 ? (
           <ul className="space-y-4">
@@ -204,7 +204,7 @@ const RecentTransactions = ({ month, year }) => {
         )}
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow">
+      <div className="bg-white p-6 rounded-lg shadow border border-black border-solid">
         <h2 className="text-xl font-semibold mb-4">Recent Expenses</h2>
         {expenseTransactions?.length > 0 ? (
           <ul className="space-y-4">

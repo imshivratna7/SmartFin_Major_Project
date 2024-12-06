@@ -1,5 +1,6 @@
 const express = require('express');
 const Transaction = require('../Models/Transaction');
+const Investment = require('../Models/InvestmentSchema')
 const router = express.Router();
 
 // Add a new transaction
@@ -26,7 +27,8 @@ const router = express.Router();
 
 router.post('/add', async (req, res) => {
   const { userId, type, amount, category, description, date, month, year } = req.body;
-
+  
+  
   try {
     const newTransaction = new Transaction({
       userId,
@@ -69,8 +71,8 @@ router.get('/user/:userId', async (req, res) => {
     const filter = { userId };
     if (month) filter.month = parseInt(month);
     if (year) filter.year = parseInt(year);
-    console.log(month);
-    console.log(year);
+    // console.log(month);
+    // console.log(year);
     
     const transactions = await Transaction.find(filter);
     res.status(200).json(transactions);
@@ -154,52 +156,59 @@ router.get('/summary/:userId', async (req, res) => {
 });
 
 
-router.post('/investments/add', async (req, res) => {
-  const { userId, type, amount, date, description, currentGrowthRate } = req.body;
+// router.post('/investments/add', async (req, res) => {
+//   const { userId, type, amount, date, description, currentGrowthRate } = req.body;
+
+//   try {
+//     const newInvestment = new Investment({
+//       userId,
+//       type,
+//       amount,
+//       date,
+//       description,
+//       currentGrowthRate,
+//     });
+
+//     await newInvestment.save();
+//     res.status(201).json({ message: 'Investment added successfully', investment: newInvestment });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error adding investment', error });
+//   }
+// });
+
+
+router.post('/investments', async (req, res) => {
+  console.log("investment posted");
+  
+  const { userId, type, name, investedAmount, growthRate, investmentDate } = req.body;
+
+  if (!userId || !type || !name || !investedAmount || !growthRate || !investmentDate) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
 
   try {
     const newInvestment = new Investment({
       userId,
       type,
-      amount,
-      date,
-      description,
-      currentGrowthRate,
+      description:name,
+      amount: investedAmount,
+      currentGrowthRate: growthRate,
+      date: investmentDate,
     });
 
     await newInvestment.save();
     res.status(201).json({ message: 'Investment added successfully', investment: newInvestment });
   } catch (error) {
-    res.status(500).json({ message: 'Error adding investment', error });
+    res.status(500).json({ message: 'Failed to add investment', error });
   }
 });
 
-
-router.post('/investments/add', async (req, res) => {
-
-  const { userId, type, amountInvested, dateOfInvestment, currentValuation,growthRate } = req.body;
-  try {
-    const investment = new Investment({
-      userId,
-      type,
-      amountInvested,
-      dateOfInvestment,
-      currentValuation,
-      growthRate
-    });
-
-    await investment.save();
-    res.status(201).json({ message: 'Investment added successfully', investment });
-  } catch (error) {
-    console.error('Error adding investment:', error);
-    res.status(500).json({ message: 'Error adding investment', error });
-  }
-});
 
 
 router.get('/investments/user/:userId', async (req, res) => {
   const { userId } = req.params;
-
+  console.log(userId);
+  
   try {
     const investments = await Investment.find({ userId });
     res.status(200).json(investments);

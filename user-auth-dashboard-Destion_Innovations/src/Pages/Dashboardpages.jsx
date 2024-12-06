@@ -176,7 +176,8 @@ const Dashboardpages = () => {
 
   return (
     <Dashboard>
-      <div className="p-6 bg-gray-100">
+      {/* <div className="p-6 bg-gray-100"> */}
+      <div className="p-6 bg-white">
         {/* Month and Year Selector */}
         <div className="mb-6 flex justify-between items-center">
           <div>
@@ -218,7 +219,7 @@ const Dashboardpages = () => {
         </div>
 
         {/* Add Income/Expense Buttons */}
-        <div className="flex justify-end space-x-4">
+        <div className="flex justify-around space-x-4">
           <button
             className="bg-green-500 text-white px-4 py-2 rounded-md transition hover:bg-green-600"
             onClick={() => setShowModal("income")}
@@ -242,7 +243,7 @@ const Dashboardpages = () => {
         )}
 
         {/* Expense vs Earning Chart */}
-        <div>
+        <div className="my-12">
           <ExpenseEarningChart  month={month} year={year} />
         </div>
       </div>
